@@ -37,7 +37,6 @@ const App = () => {
         <Route path="/healthz" element={<CheckHealth />} />
         <Route path="/code/:code" element={<SingleLinkStats />} />
       </Routes>
-
       
     </div>
      

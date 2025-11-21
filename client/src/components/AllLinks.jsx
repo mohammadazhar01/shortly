@@ -4,28 +4,33 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { MdContentCopy } from "react-icons/md";
 import toast from "react-hot-toast";
+import { useEffect } from "react";
 
 const AllLinks = ({ links, fetchLinks }) => {
     const domainURL = import.meta.env.VITE_BACKEND_URL;
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() =>{
+        if(links){
+            setLoading(false)
+        }
+    }, [links])
   
     const deleteHandle = async (code) => {
         setLoading(true)
         const { data } = await axios.delete(`/api/links/${code}`);
         
         if (data.success) {
-            setTimeout(() => setLoading(false), 500)
             toast.success("Deleted successfuly")
             fetchLinks();
         }
+        setLoading(false)
     };
     
     return (
     <CardUI>
-        {links.length !== 0 ? 
-        (loading ? (
-          <p className="text-purple-500 text-center font-medium">Loading...</p>
-        ) : (
+      {loading ? (
+        <p className="text-purple-500 text-center font-medium">Loading...</p> ) : links.length !== 0 ? (
         <>
             <h2 className="text-2xl font-bold mb-4 text-purple-700">
               All Links
@@ -93,11 +98,8 @@ const AllLinks = ({ links, fetchLinks }) => {
               </table>
             </div>
           </>
-        )
-      ) : (
-        <p className="text-red-500 text-center font-medium">
-          No link added yet!
-        </p>
+       ) : (
+       <p className="text-red-500 text-center font-medium">No link added yet!</p>
       )}
     </CardUI>
   )
