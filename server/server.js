@@ -10,7 +10,7 @@ const app = express()
 
 const startTime = Date.now();
 
-const allowedOrigins = ['http://localhost:5173','http://localhost:5173/:code', process.env.VITE_FRONTEND_URL]
+const allowedOrigins = ['http://localhost:5173','http://localhost:5173/:code', process.env.FRONTEND_URL]
 
 app.use(express.json())
 app.use(cookieParser());
@@ -35,5 +35,5 @@ await connectDB();
 
 
 app.listen(PORT, ()=> {
-    console.log(`Server is ruunning on http://localhost:${PORT}`)
+    console.log(`Server is ruunning on ${PORT}`)
 })
